@@ -54,7 +54,6 @@ render(){
                         </section>
                         </div> ) : (<div></div>)
                       }
-              {/* <Modal show={this.state.show} timePeriod={item.activity_periods} handleClose={this.hideModal}/> */}
          </div>
          ))} 
     </div>
@@ -66,21 +65,3 @@ export default App;
 
 
 
-// const Modal = ({ show,handleClose,timePeriod }) => {
-//   const [time,settime] = useState([])
-//   console.log(timePeriod,"timeperios")
-//   for(let[key,value] of Object.entries(timePeriod)){
-//      settime({ value },()=>{console.log("time",time)})
-//    } 
-
-//    const showHideClassName = show ? "modal display-block" : "modal display-none";
-
-//   return (
-//     <div className={showHideClassName}>
-//       <section className="modal-main">
-        
-//         <button onClick={handleClose}>close</button>
-//       </section>
-//     </div>
-//   );
-// };
