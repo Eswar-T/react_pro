@@ -1,5 +1,4 @@
-import React, { Component, useState } from 'react';
-import logo from './logo.svg';
+import React, { Component } from 'react';
 import './App.css';
 
 class  App extends Component {
@@ -7,15 +6,12 @@ class  App extends Component {
     super(props);
     this.state={
      dataSource:[],
-    
      show:false
     }
   }
 
   showModal = () => {
-    
     this.setState({ show: true });
-
   };
 
   hideModal = () => {
@@ -25,34 +21,46 @@ class  App extends Component {
 componentDidMount(){
   fetch("https://run.mocky.io/v3/85d1eea5-ba2e-4fcb-885b-cb6c83ab6cbc")
   .then((response)=> response.json())
-  .then((responseJson)=> this.setState({ dataSource: responseJson.members },()=>{console.log(this.state.dataSource,"source")}))
+  .then((responseJson)=> this.setState({ dataSource: responseJson.members }))
   .catch((error)=>console.log(error,"error"))
 }
 
 render(){
-
    const showHideClassName = this.state.show ? "modal display-block" : "modal display-none";
-
   return (
     <div>
+       <h1  style={{ textAlign:'center' }}>Users list and their Location</h1>
        { this.state.dataSource.map(item=>( 
          <div>
-              <button style={{ height:40,width:200,backgroundColor:"blue" }}
-                      onClick={this.showModal}>{item.real_name}</button> 
-                    
-
+              <div className="content"
+                   onClick={this.showModal}>            
+                     <div style={{ color:'black',fontWeight:'bold',textAlign:'center',marginTop:20 }}>{item.real_name}</div>
+                     <div style={{ float:'left',color:'black',fontWeight:'bold' }}>Location :</div>
+                     <div style={{ float:'left',color:'black',fontWeight:'bold',textAlign:'center',paddingLeft:10 }}>{item.tz}</div>
+                     </div> 
                       {
                         this.state.show == true ? 
-                        (<div className={showHideClassName}>
-                        <section className="modal-main">
-                        <div>{item.activity_periods.map( time =>(
-                         <div>
-                         <div>{time.start_time}</div>
-                        <div>{time.end_time}</div>
-                          </div>))}</div>
-                          <button onClick={this.hideModal}>close</button>
-                        </section>
-                        </div> ) : (<div></div>)
+                                                  (
+                                                   <div className={showHideClassName}>
+                                                       <section className="modal-main">
+                                                       <h1 style={{ textAlign:'center' }}>Activity Period</h1>
+                                                           { item.activity_periods.map( time =>(
+                                                                 <span>
+                                                                 <div className="row">                                                                  
+                                                                    <div className="column" style={{ backgroundColor:'green' }}>{time.start_time}</div>
+                                                                    <div className="column" style={{ backgroundColor:'red' }}>{time.end_time}</div>
+                                                                 </div>
+                                                                 </span>
+                                                                 ))
+                                                            }
+                                                          <button className="close" onClick={this.hideModal}>close</button>
+                                                          <ul>
+                                                          <li><h4>Start Time - Green Color Background</h4></li>
+                                                          <li><h4>End Time - Red Color Background</h4></li>
+                                                          </ul>
+                                                        </section>
+                                                    </div> ) :
+                                                   ('')
                       }
          </div>
          ))} 
